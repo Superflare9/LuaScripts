@@ -1,3 +1,6 @@
+-- AnimeFightersScript
+-- lumin#6464
+
 local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
 local l__Bindable__9 = l__ReplicatedStorage__1:WaitForChild("Bindable");
 
@@ -23,6 +26,8 @@ local Page2 = X.New({
 local Page3 = X.New({
 	Title = "MISC"
 })
+
+-- page 1 autofarm
 
 local mobs = {}
 local mob = nil
@@ -88,6 +93,8 @@ wait(.2)
 end)
 
 
+
+-- page 2 Teleports
 
 Page2.Button({
 	Text = "DBZ",
@@ -159,6 +166,9 @@ Page2.Button({
 	end
 })
 
+
+-- page 3 misc
+
 Page3.Button({
 	Text = "Magnet",
 	Callback = function()
@@ -172,5 +182,17 @@ Page3.Button({
 		    end
 		end	
 
+	end
+})
+
+Page3.Button({
+	Text = "CamClip",
+	Callback = function()
+		camclip = true
+		game:GetService('RunService').Stepped:connect(function()
+			if camclip then
+				game:GetService("Players").LocalPlayer.DevCameraOcclusionMode = "Invisicam"
+			end
+		end)
 	end
 })
