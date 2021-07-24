@@ -1,31 +1,28 @@
 -- AnimeFightersScript
 -- lumin#6464
 
+--???
 local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
 local l__Bindable__9 = l__ReplicatedStorage__1:WaitForChild("Bindable");
 
-local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+-- Gets UI
+local UILibrary = loadstring(game:HttpGet("https://pastebin.com/raw/V1ca2q9s"))()
 
-local X = Material.Load({
-	Title = "Anime Fighters Simulator",
-	Style = 1,
-	SizeX = 400,
-	SizeY = 350,
-	Theme = "Jester",
-})
+local MainUI = UILibrary.Load("Anime Fighters")
 
-local Page = X.New({
-	Title = "Auto-Farm"
-})
-local Page2 = X.New({
-	Title = "Teleports"
-})
-local Page3 = X.New({
-	Title = "MISC"
-})
+local Info = MainUI.AddPage("Info", false)
+local Page1 = MainUI.AddPage("Farm", false)
+local Page2 = MainUI.AddPage("Teleports", true)
+local Page3 = MainUI.AddPage("MISC",false)
 
--- page 1 autofarm
+--Info page
+local FirstLabel = Info.AddLabel("Made by: lumin#6464")
+local FirstLabel = Info.AddLabel("UI Made by: twinky marie")
+local FirstLabel = Info.AddLabel("This was purely made for fun")
+local FirstLabel = Info.AddLabel("If you get banned that on you")
 
+
+--Auto Farm Stuff
 local mobs = {}
 local mob = nil
 local farm = false
@@ -36,21 +33,17 @@ for i,v in pairs(game:GetService("Workspace").Worlds:GetDescendants()) do
 	end
 end
 
+local Label = Page1.AddLabel("Auto Farm")
 
-Page.Toggle({
-	Text = "On or Off",
-	Callback = function(value)
-		farm = value
-	end,
-	Enabled = false
-})
-Page.Dropdown({
-	Text = "Choose an option",
-	Callback = function(value)
-		mob = value
-	end,
-	Options = mobs
-})
+
+local Toggle = Page1.AddToggle("Auto Farm", false, function(value)
+    farm = value
+end)
+
+local Dropdown = Page1.AddDropdown("Enemy", mobs, function(value)
+    mob = value
+end)
+
 
 game:GetService('RunService').Stepped:connect(function()
 	if farm then
@@ -89,127 +82,92 @@ wait(.2)
 	end
 end)
 
+--Teleports
+local DBZT = Page2.AddButton("DBZ", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-2382,-185,435)
+end)
 
+local NatutoT = Page2.AddButton("Naruto", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-91,-183,2606)
+end)
 
--- page 2 Teleports
+local JoJoT = Page2.AddButton("JoJo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(174,-183,-1458)
+end)
 
-Page2.Button({
-	Text = "DBZ",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-2382,-185,435)
-	end
-})
+local OnePT = Page2.AddButton("One Piece", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1711, -182,297)
+end)
 
-Page2.Button({
-	Text = "Naruto",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-91,-183,2606)
+local MHAT = Page2.AddButton("MHA", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-1987.42, -184.975,2040.42)
+end)
 
-	end
-})
-Page2.Button({
-	Text = "JoJo",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(174,-183,-1458)
+local AOTT = Page2.AddButton("AOT", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-713.441, -183.392,546.039)
+end)
 
-	end
-})
+local DemonT = Page2.AddButton("Demon Slayer", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-3165.29, -184.131,-1031.87)
+end)
 
-Page2.Button({
-	Text = "One Piece",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1711, -182,297)
+local TokyoT = Page2.AddButton("Tokyo Ghoul", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-1922.44, -183.392, -1584.56)
+end)
 
-	end
-})
+local HxHT = Page2.AddButton("HxH", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1677.22, -182.801, 2275.44)
+end)
 
-Page2.Button({
-	Text = "MHA",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-1987.42, -184.975,2040.42)
+--MISC
+local Magnet = Page3.AddButton("Magnet", function()
+    getgenv().autoCoin = true -- true/false
 
-	end
-})
+    while getgenv().autoCoin == true and wait() do
+        for i,v in pairs(game:GetService("Workspace").Effects:GetDescendants()) do
+            if v.Name == "Base" then
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end	
+end)
 
-Page2.Button({
-	Text = "AOT",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-713.441, -183.392,546.039)
+local camclip = Page3.AddButton("camclip", function()
+    camclip = true
+	game:GetService('RunService').Stepped:connect(function()
+		if camclip then
+			game:GetService("Players").LocalPlayer.DevCameraOcclusionMode = "Invisicam"
+		end
+	end)
+end)
 
-	end
-})
-
-Page2.Button({
-	Text = "DemonSlayer",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-3165.29, -184.131,-1031.87)
-
-	end
-})
-
-Page2.Button({
-	Text = "TokyoGhoul",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-1922.44, -183.392, -1584.56)
-
-	end
-})
-
-Page2.Button({
-	Text = "HunterX",
-	Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1677.22, -182.801, 2275.44)
-
-	end
-})
-
-
--- page 3 misc
-
-Page3.Button({
-	Text = "Magnet",
-	Callback = function()
-		getgenv().autoCoin = true -- true/false
-
-		while getgenv().autoCoin == true and wait() do
-		    for i,v in pairs(game:GetService("Workspace").Effects:GetDescendants()) do
-		        if v.Name == "Base" then
-		            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-		        end
-		    end
-		end	
-
-	end
-})
-
-Page3.Button({
-	Text = "CamClip",
-	Callback = function()
-		camclip = true
-		game:GetService('RunService').Stepped:connect(function()
-			if camclip then
-				game:GetService("Players").LocalPlayer.DevCameraOcclusionMode = "Invisicam"
-			end
-		end)
-	end
-})
-
-Page3.Button({
-	Text = "AntiAFK",
-	 Callback = function()
-		local vu = game:GetService("VirtualUser")
-		game:GetService("Players").LocalPlayer.Idled:connect(function()
-   			vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-  			wait(1)
-   		vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+local AntiAFK = Page3.AddButton("AntiAFK", function()
+    local vu = game:GetService("VirtualUser")
+	game:GetService("Players").LocalPlayer.Idled:connect(function()
+   		vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+  		wait(1)
+   	    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 	end) 
-end
-})
+end)
 
-Page3.Button({
-	Text = "Infinite Zoom",
-	Callback = function()
-		game.Players.LocalPlayer.Character.PrimaryPart.Anchored = false
-        game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 999999999
-	end
-})
+local InfiZoom = Page3.AddButton("Infinite Zoom", function()
+    game.Players.LocalPlayer.Character.PrimaryPart.Anchored = false
+    game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 999999999
+end)
+
+local InfiJump = Page3.AddButton("Infinite Jump", function()
+    InfiniteJumpEnabled = true
+		game:GetService("UserInputService").JumpRequest:connect(function()
+		if InfiniteJumpEnabled then
+			game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+		end
+	end)
+end)
+
+local ServerHop = Page3.AddButton("Server Hop", function()
+    game:GetService("TeleportService"):Teleport(6299805723, game:GetService("Players").LocalPlayer)
+end)
+
+local Speed = Page3.AddSlider("Speed", {Min = 0, Max = 100, Def = 20}, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end)
