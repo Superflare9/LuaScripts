@@ -11,10 +11,7 @@ local X = Material.Load({
 	Style = 1,
 	SizeX = 400,
 	SizeY = 350,
-	Theme = "Light",
-	ColorOverrides = {
-		MainFrame = Color3.fromRGB(235,235,235)
-	}
+	Theme = "Jester",
 })
 
 local Page = X.New({
@@ -207,4 +204,12 @@ Page3.Button({
    		vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 	end) 
 end
+})
+
+Page3.Button({
+	Text = "Infinite Zoom",
+	Callback = function()
+		game.Players.LocalPlayer.Character.PrimaryPart.Anchored = false
+        game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 999999999
+	end
 })
