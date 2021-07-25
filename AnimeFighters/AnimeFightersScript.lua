@@ -1,7 +1,7 @@
 -- AnimeFightersScript
 -- lumin#6464
 
---???
+--used for locking onto boss
 local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
 local l__Bindable__9 = l__ReplicatedStorage__1:WaitForChild("Bindable");
 
@@ -14,9 +14,11 @@ local Info = MainUI.AddPage("Info", false)
 local Page1 = MainUI.AddPage("Farm", false)
 local Page2 = MainUI.AddPage("Teleports", true)
 local Page3 = MainUI.AddPage("MISC",false)
+local Page4 = MainUI.AddPage("***", false)
 
 --Info page
 local FirstLabel = Info.AddLabel("Made by: lumin#6464")
+local FirstLabel = Info.AddLabel("Thanks to ---------")
 local FirstLabel = Info.AddLabel("UI Made by: twinky marie")
 local FirstLabel = Info.AddLabel("This was purely made for fun")
 local FirstLabel = Info.AddLabel("If you get banned that on you")
@@ -44,6 +46,17 @@ local Dropdown = Page1.AddDropdown("Enemy", mobs, function(value)
     mob = value
 end)
 
+local Magnet = Page1.AddButton("Magnet", function()
+    getgenv().autoCoin = true -- true/false
+
+    while getgenv().autoCoin == true and wait() do
+        for i,v in pairs(game:GetService("Workspace").Effects:GetDescendants()) do
+            if v.Name == "Base" then
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end	
+end)
 
 game:GetService('RunService').Stepped:connect(function()
 	if farm then
@@ -74,7 +87,6 @@ wait(.2)
 							end	
 							game:GetService("ReplicatedStorage").Remote.ClickerDamage:FireServer()
 						until v.Health.Value <= 0 or v == nil or v.HumanoidRootPart == nil or v.DisplayName.Value ~= mob or not farm
-						
 					end)
 				end
 			end
@@ -119,19 +131,11 @@ local HxHT = Page2.AddButton("HxH", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1677.22, -182.801, 2275.44)
 end)
 
---MISC
-local Magnet = Page3.AddButton("Magnet", function()
-    getgenv().autoCoin = true -- true/false
-
-    while getgenv().autoCoin == true and wait() do
-        for i,v in pairs(game:GetService("Workspace").Effects:GetDescendants()) do
-            if v.Name == "Base" then
-                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            end
-        end
-    end	
+local SAOT = Page2.AddButton("SAO", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(361, -184, -512)
 end)
 
+--MISC
 local camclip = Page3.AddButton("camclip", function()
     camclip = true
 	game:GetService('RunService').Stepped:connect(function()
@@ -164,10 +168,20 @@ local InfiJump = Page3.AddButton("Infinite Jump", function()
 	end)
 end)
 
-local ServerHop = Page3.AddButton("Server Hop", function()
+local Speed = Page3.AddSlider("Speed", {Min = 0, Max = 100, Def = 20}, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end)
+
+
+--*** page
+
+local ServerHop = Page4.AddButton("Server Hop", function()
     game:GetService("TeleportService"):Teleport(6299805723, game:GetService("Players").LocalPlayer)
 end)
 
-local Speed = Page3.AddSlider("Speed", {Min = 0, Max = 100, Def = 20}, function(value)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+
+local test = Page4.AddButton("Don't Use", function()
+    while wait() do
+		game:GetService("ReplicatedStorage").Remote.ClickerDamage:FireServer()
+	end
 end)
