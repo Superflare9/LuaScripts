@@ -76,10 +76,10 @@ spawn(function()
 								v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame 
 							end
 						end
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.CFrame.Position + Vector3.new(0,0,0))
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.CFrame.Position + Vector3.new(0,-10,0))
 wait(.2)
 						repeat wait()
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.CFrame.Position + Vector3.new(0,0,0))
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.CFrame.Position + Vector3.new(0,-10,0))
 							for i,k in pairs(game:GetService("Workspace").Pets:GetDescendants()) do
 								if k.Name == "Owner" and k.Value == game.Players.LocalPlayer and not k.Parent.Attacking.Value then
 									l__Bindable__9.SendPet:Fire(v, false);
@@ -166,6 +166,19 @@ local InfiJump = Page3.AddButton("Infinite Jump", function()
 			game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
 		end
 	end)
+end)
+
+local NoClip = Page3.AddToggle("NoClip", false, function(value)
+    noclip = value
+	game:GetService('RunService').Stepped:connect(function()
+		if noclip then
+			game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+		end
+	end)
+
+	if noclip then
+		game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+	end
 end)
 
 local Speed = Page3.AddSlider("Speed", {Min = 0, Max = 100, Def = 20}, function(value)
