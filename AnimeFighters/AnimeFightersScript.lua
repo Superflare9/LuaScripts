@@ -193,8 +193,10 @@ local ServerHop = Page4.AddButton("Server Hop", function()
 end)
 
 
-local test = Page4.AddButton("Don't Use", function()
-    while wait() do
-		game:GetService("ReplicatedStorage").Remote.ClickerDamage:FireServer()
-	end
+local test = Page4.AddToggle("Don't Use", false, function(value)
+    game:GetService('RunService').Stepped:connect(function()
+		if value == true then
+			game:GetService("ReplicatedStorage").Remote.ClickerDamage:FireServer()
+		end
+	end)
 end)

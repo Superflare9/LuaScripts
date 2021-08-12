@@ -1,0 +1,223 @@
+Hello,
+
+So you wanna know how to script
+
+This will teach you the "basics" with examples from my Anime Fighters Script.
+
+
+
+BASICS
+-
+Printing:
+Printing can be very useful when debugging since it allows you to see where your mistakes are.
+To print something you use:
+print("Hello World")
+Output: Hello World
+
+-
+Variables:
+Variables are used to store data that can be used in other parts of your code.
+To assign a variable you:
+Variable = "Hi"
+print(Variable)
+Output: Hi
+
+-
+If ... Then:
+If Then statements are used to make sure only specific things happen if the statement is satisfied.
+To use a If Then statement you:
+Var = true
+if Var == true then
+	print("Hi")
+end
+Output: Hi
+
+-
+While ... Do:
+While Do statements are used to make sure only specific things happen over and over while the statement is satisfied.
+Var = 3
+while Var != 0 do
+	print("Hello")
+	Var -= 1
+end
+Output: Hello Hello Hello
+
+
+
+
+SCRIPTING TIPS
+-
+Viewing Game Data:
+You need a program that can allow you to look through the games files to find where the different parts that you can use to your advantage are.
+If you use KRNL you can go under the Hot-Scripts tab and click DarkDex otherwise you can just look up DarkDex v4 and use that.
+I highly recoment you look through the different folders and parts before you start programming it.
+
+-
+Read Roblox Scripting Website
+I know this is a lot of work but the developers of the games are working with the same information and that is what allows a lot of the different scripts to work.
+Some of the things we use in our scripts are given to us by roblox devs themselfs because they are supposed to be used by game devs.
+
+-
+Trial And Error:
+You might run into a few issues when you are first learning as you might call the wrong function causing the game to crash or something unexpected to happen but thats normal.
+It takes a lot to find the bugs that you can use at first.
+
+-
+Find One Thing At A Time:
+Don't jump around on fetures.
+Finish one and then move on.
+
+-
+If you are planning on having anything happen you will have to use "game" you will see examples in the next section
+
+
+
+
+UI DEVELOPMENT
+-
+UI Selecting:
+Although you might not think this but the UI is one most important parts of a script.
+It allows you to enable is disable your different functions easily and also makes it so you don't need to keep copying and pasting from places.
+You should pick a UI that has fetures that are able to satisfy your needs.
+I recommend picking a premade UI that has: Buttons, Toggles, and Dropdows at a minimum, but if you can also get one with sliders that is the best as sliders can be important.
+It is up to the individual to find a UI that works for them.
+If you can't find one that works, you can make your own but that is slightly more complex and I don't suggest doing that if you are new.
+
+-
+UI Setup:
+Setting up the UI can take some time.
+Start out simple with a few tabs and buttons as to just figure out how your UI Setup works
+Tabs are very important to make your UI very clean and easy to use.
+
+
+
+SCRIPTING TIME
+-
+Teleporting:
+Depending on the game it might be different but for Anime Fighters teleporting is easyish.
+All you do is update your players x, y, z positions by creating a new CFrame which replaces the old data for position with new coordinates.
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(-2382,-185,435)
+
+If you paste that into your executor it will teleport your character to DBZ World.
+We got these coordinates from DarkDex by following the folder structure Players/"Your Name"/Character/HumanoidRootPart
+HumanoidRootPart is not a folder we enter but it stores the player data for location if you scroll down on the information it gives you.
+You can go to anywhere on the map and copy the coordinates from DarkDex into that function and if you go away then run the function it will teleport you to where the coordinates are for.
+We use teleporting for a lot of the fetures in the scripts so you will see more of that later.
+
+
+-
+NoClip:
+Although not a required feture it is still very useful to understand since you can use it on monst games as long as it doesn't have an anticheat.
+
+game:GetService('RunService').Stepped:connect(function()
+	game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end)
+
+It is a very 2 step function as you can see.
+The .Stepped allows the change of state which is important because it allows for it to bypass some checks that otherwise prevent you from doing the ChangeState
+Again if we follow the folder structure we see Players/"Your Name"/Character/Humanoid
+Humanoid is what makes up your character's outfit and by extension hitboxes.
+What ChangeState(11) does is it makes it so your hitboxes no longer collide with objects in the same way.
+You wouldn't want to just run that function alone as you have no way of disabling it.
+If you have your UI setup create a toggle that you can get a value from
+
+noclip = value
+game:GetService('RunService').Stepped:connect(function()
+	if noclip then
+		game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+	end
+end)
+
+if noclip then
+	game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end
+
+If you put that code into your toggle function it will be activated when you select your toggle and deactivated when you untoggle.
+
+-
+
+AntiAFK
+This one looks worse than it is by a lot
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+local vu = game:GetService("VirtualUser")
+This line creates a VirtualUser that you can thank for keeping you from getting kicked.
+It creates a local variable name vu which stores your VirtualUser.
+
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+This is the most confusing of them all for this feture.
+It gets your Player data by going into the folders Player/"Your Character" and detects if its been set to idled.
+If it gets finds that you are Idled it calls the function
+
+vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+This line tells your Virtual User that we created on the first line to hold the right mousebutton down.
+The Vector2 is used to move the camera 0 up or down and 0 left or right.
+That allows it to register something happened and update you from idle to active.
+
+wait(1)
+It just has it keep holding right click down for 1 second.
+Nothing big here.
+
+vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+It does the same and the Button2Down but lifts up so it doens't mess with anything.
+
+end
+End is used to close any if, while, for, or other functions.
+
+
+-
+Magnet
+This is a bit more complex since it is does call more than one thing.
+
+getgenv().autoCoin = true
+
+while getgenv().autoCoin == true and wait() do
+	for i,v in pairs(game:GetService("Workspace").Effects:GetDescendants()) do
+		if v.Name == "Base" then
+			v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		end
+	end
+end
+
+I'll explan this one line by line since its a bit complex.
+
+getgenv().autoCoin is used to get your exploit's enviroment table.
+It is telling your exploit to set that value to true so it doesn't get changed by different thing telling it not to.
+You could change that and make it toggable but i'll leave that to you.
+The "= true" just tells the variable getgenv().autoCoin to be true.
+
+while get.genv().autoCoin == true and wait() do
+This function just has has it it run the next few lines over and over.
+"wait()" is used to make sure it doesn't run to fast and crash your game by checking while its already checking.
+
+for i,v in pairs(game:GetService("Workspace").Effects:GetDescendants()) do
+This is where its the most confusing probably but its not that bad once you get it.
+This is telling it for each of the things in finds in the folders Workspace/Effects
+"GetDescendants()" gets all of the things in the folder and stores them all in the variable v.
+The dropped items such as coins and boosts are stored in this location.
+
+if v.Name == "Base" then
+This ones not bad.
+its just a if statement that compares the names of the variable v from the previous line to the text "Base" which is the name of the coins and other powerups.
+
+v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+This is just the teleport function we looked at earlier but reversed where the coin goes to you insted of you going to the coin.
+It takes your x, y, z values and sets the variable we got earlier's CFrame to the ones we had got.
+
+end
+End is used to close any if, while, for, or other functions.
+
+
+
+-
+This is the end of my little Basics with lumi#6464.
+Although it didn't cover some things such as autofarm and speed hax or camclip it should give you enough information to be able to do those fetures yourself.
+If you need help with anything feel free to DM me anytime.
+
